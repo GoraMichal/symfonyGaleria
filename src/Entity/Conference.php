@@ -32,12 +32,12 @@ class Conference
     /**
      * @ORM\Column(type="boolean")
      */
-    private $delete;
+    private $isInternational;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isInternational;
+    private $delete;
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="conference", orphanRemoval=true)
@@ -87,18 +87,6 @@ class Conference
         return $this;
     }
 
-    public function getDelete(): ?bool
-    {
-        return $this->delete;
-    }
-
-    public function setDelete(bool $delete): self
-    {
-        $this->delete = $delete;
-
-        return $this;
-    }
-
     public function getIsInternational(): ?bool
     {
         return $this->isInternational;
@@ -107,6 +95,18 @@ class Conference
     public function setIsInternational(bool $isInternational): self
     {
         $this->isInternational = $isInternational;
+
+        return $this;
+    }
+
+    public function getDelete(): ?bool
+    {
+        return $this->delete;
+    }
+
+    public function setDelete(bool $delete): self
+    {
+        $this->delete = $delete;
 
         return $this;
     }
