@@ -16,7 +16,7 @@ class ConferenceController extends AbstractController
     {
 //        return $this->json([
 //            'message' => 'Welcome to your new controller!',
-//            'path' => 'src/Controller/ConferenceController.php',
+//            'path' => 'src/Controller/AdminController.php',
 //        ]);
 
         $greet = '';
