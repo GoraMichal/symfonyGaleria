@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conference{% endblock %}
+
+{% block body %}
+    <h2>Give your feedback</h2>
+
+    {% for conference in all_conferences %}
+        <h3>{{ conference }}</h3>
+    {% endfor %}
+{% endblock %}

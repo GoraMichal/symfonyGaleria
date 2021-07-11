@@ -20,7 +20,7 @@ class ConferenceRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Conference[] Returns an array of Conference objects
+    //  * @return conference[] Returns an array of conference objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class ConferenceRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Conference
+    public function findOneBySomeField($value): ?conference
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')
