@@ -7,5 +7,10 @@
 
     {% for conference in all_conferences %}
         <h3>{{ conference }}</h3>
+        <p>
+            <a href="{{ path('conference', { id: conference.id }) }}">View</a>
+{#            <a href="/conference/{{ conference.id }}">View</a>#}
+        </p>
+
     {% endfor %}
 {% endblock %}
