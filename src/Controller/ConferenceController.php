@@ -13,27 +13,46 @@ use Twig\Environment;
 
 class ConferenceController extends AbstractController
 {
+    private $twig;
+
+    public function __construct(Environment $twig)
+    {
+        $this->twig = $twig;
+    }
 
     #[Route('/', name: 'homepage')]
-
-    public function index(Environment $twig, ConferenceRepository $conferenceRepository): Response
+    public function index(ConferenceRepository $conferenceRepository): Response
     {
-        return new Response($twig->render('conference/index.html.twig', [
+//        return new Response($twig->render('conference/index.html.twig', [
+        return new Response($this->twig->render('conference/index.html.twig', [
             'all_conferences' => $conferenceRepository->findAll()
         ]));
     }
 
     #[Route('/conference/{id}', name: 'conference')]
-
-    public function show(Environment $twig, Conference $conference, CommentRepository $commentRepository): Response
+    public function show(Request $request, Conference $conference, CommentRepository $commentRepository, ConferenceRepository $conferenceRepository): Response
     {
-        return new Response($twig->render('conference/show.html.twig', [
-                'conference' => $conference,
-                'comments' => $commentRepository->findBy(['conference' => $conference], ['createdAt' => 'DESC'])
-            ]));
+        $offset = max(0, $request->query->getInt('offset', 0));
+
+        $paginator = $commentRepository->getCommentPaginator($conference, $offset);
+
+        return new Response($this->twig->render('conference/show.html.twig', [
+            'conference' => $conference,
+            'conferences' => $conferenceRepository->findAll(),
+            'all_comments' => $paginator,
+            'previous' => $offset - CommentRepository::PAGINATOR_PER_PAGE,
+            'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE)
+        ]));
     }
 
 
+//    public function show(Environment $twig, Conference $conference, CommentRepository $commentRepository): Response
+//    {
+//        return new Response($twig->render('conference/show.html.twig', [
+//                'conference' => $conference,
+//                'all_comments' => $commentRepository->findBy(['conference' => $conference], ['createdAt' => 'DESC'])
+//            ]));
+//    }
 
 //    #[Route('/', name: 'homepage')]
 //    #[Route("/hello/{name}", name: "homepage")]
