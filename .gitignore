@@ -7,4 +7,5 @@
 /public/bundles/
 /var/
 /vesndor/
+/public/uploads
 ###< symfony/framework-bundle ###

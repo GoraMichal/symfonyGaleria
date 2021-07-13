@@ -35,7 +35,7 @@ class ConferenceController extends AbstractController
     }
 
     #[Route('/conference/{slug}', name: 'conference')]
-    public function show(Request $request, Conference $conference, CommentRepository $commentRepository, ConferenceRepository $conferenceRepository): Response
+    public function show(Request $request, Conference $conference, CommentRepository $commentRepository, ConferenceRepository $conferenceRepository, string $photoDir): Response
     {
         $comment = new Comment();
         $form = $this->createForm(CommentFormType::class, $comment);
@@ -43,6 +43,15 @@ class ConferenceController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             $comment->setConference($conference);
+
+            if($photo = $form['photo']->getData()){
+                $filename = bin2hex(random_bytes(6).'.'.$photo->guessExtension());
+                try {
+                    $photo->move($photoDir, $filename);
+                } catch (FileException $e) { }
+
+                $comment->setPhotoFilename($filename);
+            }
 
             $this->entityManager->persist($comment); //zapis
             $this->entityManager->flush(); //zapytanie
