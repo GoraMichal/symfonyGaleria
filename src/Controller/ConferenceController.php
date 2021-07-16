@@ -89,7 +89,7 @@ class ConferenceController extends AbstractController
 //    {
 //        return $this->json([
 //            'message' => 'Welcome to your new controller!',
-//            'path' => 'src/Controller/AdminController.php',
+//            'path' => 'src/Controller/DashboardController.php',
 //        ]);
 //    }
 
